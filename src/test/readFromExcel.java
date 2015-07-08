@@ -1,4 +1,5 @@
 package test;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,37 +14,48 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 public class readFromExcel {
 	private String inputFile;
 	private String outputFile;
 	TreeMap<String, String> properties = new TreeMap<String, String>();
 	String[] platforms = { "Android", "iOS", "WindowsP" };
+
 	public readFromExcel(String inputFile, String outputFile) {
 		this.inputFile = inputFile;
 		this.outputFile = outputFile;
 	}
+
 	public void setInputFile(String inputFile) {
 		this.inputFile = inputFile;
 	}
+
 	public void read() {
 		try {
+
 			FileInputStream file = new FileInputStream(inputFile);
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet;
+
 			for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
 				properties.clear();
 				sheet = workbook.getSheetAt(i);
+
 				Iterator<Row> rowIterator = sheet.iterator();
 				while (rowIterator.hasNext()) {
+
 					Row row = rowIterator.next();
 					Iterator<Cell> cellIterator = row.cellIterator();
 					String key = cellIterator.next().getStringCellValue();
+
 					while (cellIterator.hasNext()) {
 						Cell cell = cellIterator.next();
+
 						switch (cell.getCellType()) {
 						case Cell.CELL_TYPE_NUMERIC:
 							Double val = cell.getNumericCellValue();
@@ -56,6 +68,7 @@ public class readFromExcel {
 							break;
 						}
 					}
+
 				}
 				workbook.close();
 				file.close();
@@ -64,6 +77,7 @@ public class readFromExcel {
 				writeToPropertiesFile(sheet.getSheetName());
 				writeToStringFile(sheet.getSheetName());
 				writeToResxFile(sheet.getSheetName());
+
 			}
 			AppZip appZip = new AppZip();
 			for (int i = 0; i < platforms.length; i++) {
@@ -74,8 +88,11 @@ public class readFromExcel {
 			System.out.println("File cannot be opened:  " + inputFile);
 			e.printStackTrace();
 		}
+
 	}
+
 	public void writeToPropertiesFile(String propertiesPath) {
+
 		Properties props = new Properties() {
 			@Override
 			public synchronized Enumeration<Object> keys() {
@@ -86,38 +103,55 @@ public class readFromExcel {
 		File propertiesFile = new File(outputFile + File.separator
 				+ platforms[0] + File.separator + propertiesPath,
 				propertiesPath + ".properties");
+
 		try {
+
 			FileOutputStream xlsFos = new FileOutputStream(propertiesFile);
 			Iterator<String> mapIterator = properties.keySet().iterator();
+
 			while (mapIterator.hasNext()) {
+
 				String key = mapIterator.next().toString();
 				String value = properties.get(key);
 				props.setProperty(key, value);
+
 			}
 			props.store(new OutputStreamWriter((xlsFos), "UTF-8"), null);
+
 		} catch (FileNotFoundException e) {
+
 			e.printStackTrace();
+
 		} catch (IOException e) {
+
 			e.printStackTrace();
+
 		}
 	}
+
 	public void writeToStringFile(String stringPath) throws IOException {
+
 		File stringFile = new File(outputFile + File.separator + platforms[1]
 				+ File.separator + stringPath, stringPath + ".string");
 		FileWriter fileWriter = new FileWriter(stringFile, false);
 		BufferedWriter bWriter = new BufferedWriter(fileWriter);
+
 		try {
+
 			FileOutputStream xlsFos = new FileOutputStream(stringFile);
 			Iterator<String> mapIterator = properties.keySet().iterator();
 			Iterator<String> contIterator = properties.keySet().iterator();
+
 			String key = mapIterator.next().toString();
 			String value = properties.get(key);
 			char[] charArray1 = key.toCharArray();
+
 			bWriter.write(" //" + charArray1[0] + "\n");
 			bWriter.write("\"" + key + "\"");
 			bWriter.write(" = ");
 			bWriter.write("\"" + value + "\";");
 			bWriter.newLine();
+
 			while (mapIterator.hasNext()) {
 				key = mapIterator.next().toString();
 				value = properties.get(key);
@@ -126,32 +160,43 @@ public class readFromExcel {
 						.toCharArray();
 				if (charArray1[0] != charArray2[0]) {
 					bWriter.write("\n //" + charArray1[0] + "\n");
+
 				}
 				bWriter.write("\"" + key + "\"");
 				bWriter.write(" = ");
 				bWriter.write("\"" + value + "\";");
 				bWriter.newLine();
+
 			}
 			bWriter.close();
 			xlsFos.close();
 		} catch (FileNotFoundException e) {
+
 			e.printStackTrace();
+
 		} catch (IOException e) {
+
 			e.printStackTrace();
+
 		}
 	}
+
 	public void writeToResxFile(String resxPath) throws IOException {
 		File resxFile = new File(outputFile + File.separator + platforms[2]
 				+ File.separator + resxPath, resxPath + ".resx");
 		FileWriter fileWriter = new FileWriter(resxFile, false);
 		BufferedWriter bWriter = new BufferedWriter(fileWriter);
+
 		try {
+
 			FileOutputStream xlsFos = new FileOutputStream(resxFile);
 			Iterator<String> mapIterator = properties.keySet().iterator();
 			// bWriter.write("<?xml version="+"\""+"1.0"+"\""+" encoding="+"\""+"utf-8"+"\""+"?>\n");
 			while (mapIterator.hasNext()) {
+
 				String key = mapIterator.next().toString();
 				String value = properties.get(key);
+
 				bWriter.write("<data name=");
 				bWriter.write("\"" + key + "\">");
 				bWriter.newLine();
@@ -159,16 +204,24 @@ public class readFromExcel {
 				bWriter.newLine();
 				bWriter.write("</data>");
 				bWriter.newLine();
+
 			}
 			bWriter.close();
 			xlsFos.close();
 		} catch (FileNotFoundException e) {
+
 			e.printStackTrace();
+
 		} catch (IOException e) {
+
 			e.printStackTrace();
+
 		}
+
 	}
+
 	public void createFolder() {
+
 		File gDir = new File(outputFile, "iOS");
 		if (!gDir.exists()) {
 			boolean res = false;
@@ -178,7 +231,7 @@ public class readFromExcel {
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-				System.out.println("iOS file cannot be created\n");
+				System.out.println("\niOS file cannot be created\n");
 			}
 			if (res) {
 				System.out.println("iOS file is created");
@@ -221,8 +274,11 @@ public class readFromExcel {
 			}
 		}
 		System.out.println("********************************");
+
 	}
+
 	public void createLanguageFolder(String folderPath) {
+
 		for (int i = 0; i < platforms.length; i++) {
 			File theDir = new File(outputFile + File.separator + platforms[i],
 					"" + folderPath);
@@ -230,6 +286,7 @@ public class readFromExcel {
 				System.out.println("creating directory: " + platforms[i] + "->"
 						+ folderPath);
 				boolean result = false;
+
 				try {
 					theDir.mkdir();
 					result = true;
@@ -244,7 +301,9 @@ public class readFromExcel {
 			} else {
 				System.out.println("file is already exist\n");
 			}
+
 		}
 		
 	}
+
 }

@@ -1,31 +1,134 @@
 package test;
 
-import java.io.IOException;
-import java.util.Scanner;
+import java.awt.EventQueue;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.TreeMap;
 
-import test.readFromExcel;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
-public class main {
-	public static void main(String[] args) throws IOException {
+public class main extends Frame {
+	private JFrame frame;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JButton chooseButton;
+	private File excelFile;
+	private File destPath;
+	private JButton btnChooseDestination;
+	TreeMap<String, String> properties = new TreeMap<String, String>();
+	String[] platforms = { "Android", "iOS", "WindowsP" };
 
-		/*
-		 * readFromExcel test = new readFromExcel("Book1.xlsx"); test.read();
-		 */
-
-		String inputName = null;
-		String outputName = null;
-	
-		System.out.println("drop to excel file you want to read\n");
-		Scanner scanIn = new Scanner(System.in);
-		inputName = scanIn.nextLine();
-		inputName = inputName.replaceAll("\\s", "");
-		System.out.println("enter to destination path  \n");
-		Scanner scanOu = new Scanner(System.in);
-		outputName = scanOu.nextLine();
-		outputName = outputName.replaceAll("\\s", "");
-		readFromExcel test = new readFromExcel(inputName, outputName);
-
-		test.read();
-
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					main window = new main();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
+
+	public main() {
+		initialize();
+	}
+
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		JButton OKButton = new JButton("OK");
+		OKButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					readFromExcel test = new readFromExcel(excelFile
+							.getAbsolutePath(), destPath.getAbsolutePath());
+					test.read();
+					JOptionPane.showMessageDialog(frame,
+							"Excel file has been converted successfully!");
+					System.exit(0);
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(frame,
+							"File could not be converted properly!", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		OKButton.setBounds(278, 145, 97, 25);
+		frame.getContentPane().add(OKButton);
+		textField = new JTextField();
+		textField.setBounds(0, 70, 271, 22);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(0, 108, 271, 22);
+		frame.getContentPane().add(textField_1);
+		chooseButton = new JButton("Choose Excel File");
+		chooseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				final JFileChooser fc = new JFileChooser();
+				fc.setDialogTitle("Choose Excel File");
+				int returnVal = fc.showOpenDialog(frame);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File cntrlF = fc.getSelectedFile();
+					String path = cntrlF.getAbsolutePath();
+					if (path.endsWith("xlsx") || path.endsWith("xls")
+							|| path.endsWith("xml")) {
+						System.out.println("yeap");
+						excelFile = fc.getSelectedFile();
+						System.out.println("File: " + excelFile.getName() + ".");
+						textField.setText(excelFile.getAbsolutePath());
+					} else {
+						JOptionPane.showMessageDialog(frame,
+								"Chosen File must be an Excel File!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					System.out.println("Open command cancelled by user.");
+					JOptionPane.showMessageDialog(frame, "No file chosen!",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		chooseButton.setBounds(278, 69, 154, 25);
+		frame.getContentPane().add(chooseButton);
+		btnChooseDestination = new JButton("Choose Destination");
+		btnChooseDestination.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setCurrentDirectory(new java.io.File("."));
+				chooser.setDialogTitle("Choose Destination Folder");
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.setAcceptAllFileFilterUsed(false);
+				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					destPath = chooser.getSelectedFile();
+					System.out.println("getCurrentDirectory(): "
+							+ chooser.getCurrentDirectory());
+					System.out.println("getSelectedFile() : "
+							+ chooser.getSelectedFile());
+					textField_1.setText(destPath.getAbsolutePath());
+				} else {
+					System.out.println("No Selection ");
+					JOptionPane.showMessageDialog(frame, "No file chosen!",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnChooseDestination.setBounds(278, 107, 154, 25);
+		frame.getContentPane().add(btnChooseDestination);
+	}
+
 }

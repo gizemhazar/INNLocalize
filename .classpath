@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="/Users/gizemhazar/Desktop/external jars/common-lang3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/gizemhazar/Desktop/external jars/dom4j-1.6.1-hudson-1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/gizemhazar/Desktop/external jars/jxl-2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/gizemhazar/Desktop/external jars/poi-3.12-20150511.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/gizemhazar/Desktop/external jars/poi-ooxml-3.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/gizemhazar/Desktop/external jars/poi-ooxml-schemas-3.12-20150511.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/gizemhazar/Desktop/external jars/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
