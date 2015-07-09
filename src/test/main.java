@@ -8,9 +8,6 @@ import test.readFromExcel;
 public class main {
 	public static void main(String[] args) throws IOException {
 
-		/*
-		 * readFromExcel test = new readFromExcel("Book1.xlsx"); test.read();
-		 */
 
 		String inputName = null;
 		String outputName = null;
