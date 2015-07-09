@@ -72,7 +72,7 @@ public class main extends Frame {
 		OKButton.setBounds(278, 145, 97, 25);
 		frame.getContentPane().add(OKButton);
 		lblConvertExcelFile = new JLabel("Convert Excel File");
-		lblConvertExcelFile.setBounds(130, 13, 200, 60);
+		lblConvertExcelFile.setBounds(130, 13, 210, 60);
 		frame.getContentPane().add(lblConvertExcelFile);
 		lblConvertExcelFile.setForeground(Color.DARK_GRAY);
 		lblConvertExcelFile.setFont(new Font("Andalus", Font.BOLD, 20));
