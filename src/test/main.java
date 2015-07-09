@@ -1,6 +1,8 @@
 package test;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import java.util.TreeMap;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -21,6 +24,7 @@ public class main extends Frame {
 	private File excelFile;
 	private File destPath;
 	private JButton btnChooseDestination;
+	private JLabel lblConvertExcelFile;
 	TreeMap<String, String> properties = new TreeMap<String, String>();
 	String[] platforms = { "Android", "iOS", "WindowsP" };
 
@@ -46,7 +50,8 @@ public class main extends Frame {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		JButton OKButton = new JButton("OK");
+		frame.setResizable(false);
+		JButton OKButton = new JButton("Convert");
 		OKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -66,6 +71,11 @@ public class main extends Frame {
 		});
 		OKButton.setBounds(278, 145, 97, 25);
 		frame.getContentPane().add(OKButton);
+		lblConvertExcelFile = new JLabel("Convert Excel File");
+		lblConvertExcelFile.setBounds(130, 13, 200, 60);
+		frame.getContentPane().add(lblConvertExcelFile);
+		lblConvertExcelFile.setForeground(Color.DARK_GRAY);
+		lblConvertExcelFile.setFont(new Font("Andalus", Font.BOLD, 20));
 		textField = new JTextField();
 		textField.setBounds(0, 70, 271, 22);
 		frame.getContentPane().add(textField);
@@ -74,11 +84,11 @@ public class main extends Frame {
 		textField_1.setColumns(10);
 		textField_1.setBounds(0, 108, 271, 22);
 		frame.getContentPane().add(textField_1);
-		chooseButton = new JButton("Choose Excel File");
+		chooseButton = new JButton("Select File");
 		chooseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				final JFileChooser fc = new JFileChooser();
-				fc.setDialogTitle("Choose Excel File");
+				fc.setDialogTitle("Select File");
 				int returnVal = fc.showOpenDialog(frame);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File cntrlF = fc.getSelectedFile();
@@ -105,12 +115,12 @@ public class main extends Frame {
 		frame.setVisible(true);
 		chooseButton.setBounds(278, 69, 154, 25);
 		frame.getContentPane().add(chooseButton);
-		btnChooseDestination = new JButton("Choose Destination");
+		btnChooseDestination = new JButton("Save Here");
 		btnChooseDestination.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new java.io.File("."));
-				chooser.setDialogTitle("Choose Destination Folder");
+				chooser.setDialogTitle("Save Here");
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				chooser.setAcceptAllFileFilterUsed(false);
 				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
