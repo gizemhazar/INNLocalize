@@ -11,7 +11,7 @@ pair (One column must represents keys and the other one must values). Excel supp
 Application produces three files from every sheet in excel and imports giving sheet name as these different formats files name and locates them which is related platform's folder. 
 #Running
 Working on CMD or Terminal, firstly need to produce runnable jar file or can use ``` runnableConsole.jar ``` in git and can skip Running on Console part, instead of produce new runnable jar.
-###Creatin New Runnable Jar File
+###Creating New Runnable Jar File
 After adding source code and external jars to eclipse (while this project was creating , external jars used in eclipse so these jars were added to git for achieve jars very easy.) Then right click your project and click export ->Runnable jar file , expand the "Java" folder and double click the "Runnable JAR file" option. 
 ###Running on Console 
 After created jar file type on command prompt
