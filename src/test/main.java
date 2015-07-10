@@ -1,6 +1,7 @@
 package test;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Frame;
@@ -15,6 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class main extends Frame {
 	private JFrame frame;
@@ -72,7 +76,7 @@ public class main extends Frame {
 		OKButton.setBounds(278, 145, 97, 25);
 		frame.getContentPane().add(OKButton);
 		lblConvertExcelFile = new JLabel("Convert Excel File");
-		lblConvertExcelFile.setBounds(130, 13, 200, 60);
+		lblConvertExcelFile.setBounds(130, 13, 180, 60);
 		frame.getContentPane().add(lblConvertExcelFile);
 		lblConvertExcelFile.setForeground(Color.DARK_GRAY);
 		lblConvertExcelFile.setFont(new Font("Andalus", Font.BOLD, 20));
@@ -88,13 +92,18 @@ public class main extends Frame {
 		chooseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				final JFileChooser fc = new JFileChooser();
+				FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter(
+						"xlsx files (*.xlsx, .xls, .xlt, .xltx)", "xlsx","xls","xlt","xltx");
+				fc.addChoosableFileFilter(xmlFilter);
+				fc.setFileFilter(xmlFilter);
 				fc.setDialogTitle("Select File");
 				int returnVal = fc.showOpenDialog(frame);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File cntrlF = fc.getSelectedFile();
 					String path = cntrlF.getAbsolutePath();
+
 					if (path.endsWith("xlsx") || path.endsWith("xls")
-							|| path.endsWith("xml")) {
+							|| path.endsWith("xlt") || path.endsWith("xltx")) {
 						System.out.println("yeap");
 						excelFile = fc.getSelectedFile();
 						System.out.println("File: " + excelFile.getName() + ".");
@@ -115,12 +124,12 @@ public class main extends Frame {
 		frame.setVisible(true);
 		chooseButton.setBounds(278, 69, 154, 25);
 		frame.getContentPane().add(chooseButton);
-		btnChooseDestination = new JButton("Save Here");
+		btnChooseDestination = new JButton("Export Path");
 		btnChooseDestination.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new java.io.File("."));
-				chooser.setDialogTitle("Save Here");
+				chooser.setDialogTitle("Export Path");
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				chooser.setAcceptAllFileFilterUsed(false);
 				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
