@@ -5,7 +5,7 @@ INNLocalize is a java application for convert an excel file to different formats
 for iOS .string extension, for windows phone .resx extension). Giving excel file must consists of key and value
 pair (One column must represents keys and the other one must values). Excel supported read formats:
   - Microsoft Excel 97(-2007) (BIFF8) .xls 
-  - Microsoft Excel Template (.xlt)
+  - Microsoft Excel Template (.xlt,.xltx)
   - Microsoft Excel XML (2007+) (OOXML) .xlsx file formats.
   
 Application produces three files from every sheet in excel and imports giving sheet name as these different formats files name and locates them which is related platform's folder. 
