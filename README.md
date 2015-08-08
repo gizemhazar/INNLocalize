@@ -15,7 +15,7 @@ Working on CMD or Terminal, firstly need to produce runnable jar file. After add
 $ java -jar <jar file path>
 ```
 eg ```$ java -jar /Users/username/Desktop/test.jar```
-After runned jar file, a file chooser will open and choose an excel file and a target folder.
+After jar file is run , a file chooser will open and choose an excel file and a target folder.
 
 Finally all these steps , files which they're in different formats (.properties,.string,.resx) will be located under relational 
 platform folder with their zip files.
