@@ -20,7 +20,7 @@ $ java -jar <jar file path>
 ```
 eg ```$ java -jar /Users/username/Desktop/test.jar```
 
-After runned jar file, drop excel file, which you want to convert, on Terminal (or CMD).
+After jar file is run, drop excel file, which you want to convert, on Terminal (or CMD).
 ```sh
     drop excel file you want to read 
    /Users/username/desktop/Book1.xlsx 
